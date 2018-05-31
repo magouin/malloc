@@ -10,38 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MALLOC_H
-# define MALLOC_H
-# include <stdlib.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <sys/mman.h>
-# include "libft.h"
-# define MIN(x1, x2) ((x1) < (x2) ? (x1) : (x2))
-# define MAX(x1, x2) ((x1) > (x2) ? (x1) : (x2))
-# define PMAX 1024
-# define SMALL 256
-# define MEDIUM 4096
-
-struct				s_head
-{
-	size_t			size;
-	char			used;
-}					;
-
-struct				s_mem
-{
-	int				type;
-	void			*memory[PMAX];
-}					;
-
-typedef struct		s_env
-{
-	int				coucou;
-}					t_env;
-
-void				free(void *ptr);
-void				*malloc(size_t size);
-void				*realloc(void *ptr, size_t size);
-void				show_alloc_mem(void);
+#ifndef GLOBAL_H
+# define GLOBAL_H
+	struct s_mem	page[3] = {(struct s_mem){SMALL, {NULL}}, (struct s_mem){MEDIUM, {NULL}}, (struct s_mem){0, {NULL}}};
 #endif

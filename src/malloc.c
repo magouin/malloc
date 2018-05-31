@@ -12,8 +12,7 @@
 
 #include <malloc.h>
 
-struct s_mem	page[3] = {(struct s_mem){SMALL, {NULL}},
-	(struct s_mem){MEDIUM, {NULL}}, (struct s_mem){0, {NULL}}};
+extern struct s_mem	page[3];
 
 void			*get_space(unsigned char *mem, int type, size_t size)
 {

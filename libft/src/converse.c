@@ -17,7 +17,11 @@ void	ft_unicode(int c, int *o)
 	char c1[4];
 
 	ft_bzero(c1, 4);
-	(c == 0) ? (*o)++ && ft_putchar('\0') : 0;
+	if (c == 0)
+	{
+		(*o)++;
+		ft_putchar('\0');
+	}
 	if (c < 0x80)
 		c1[0] = ((c >> 0 & 0x7F) | 0x00);
 	else if (c < 0x800)
@@ -82,7 +86,7 @@ void	l(va_list ap, const char *c, int *x, int *o)
 	else if (c[*x] == 'n')
 	{
 		nb = va_arg(ap, long int*);
-		nb = (long int*)o;
+		*nb = *o;
 	}
 	else if (c[*x] == 'x')
 		*o += ft_putstr(ft_itoa_base_u_long(va_arg(ap, unsigned long int), 16));

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <malloc.h>
+#include <global.h>
 
 static int		search_for_free(int y, int x, size_t *z, void *ptr)
 {

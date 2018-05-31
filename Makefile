@@ -51,7 +51,7 @@ $(NAME): $(LIBFT) $(FOBJ)
 
 $(DOBJ)/%.o: $(DSRC)/%.c $(DINC)
 		@$(MKDIR) $(DOBJ)
-			$(CC) $(WFLAGS) -c $< $(FINCLIB) -o $@
+			$(CC) $(WFLAGS) -c $< $(FINCLIB) -o $@ -fPIC
 
 libft:
 		make -C $(DLIB)

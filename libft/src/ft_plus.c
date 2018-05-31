@@ -14,8 +14,6 @@
 
 void	bb_ft_plus(va_list ap, const char *c, int *x, int *o)
 {
-	int tmp;
-
 	if (c[*x + 2] == ' ')
 	{
 		(*x)++;
@@ -24,7 +22,6 @@ void	bb_ft_plus(va_list ap, const char *c, int *x, int *o)
 	}
 	else if (c[*x + 2] <= '9' && c[*x + 2] >= '0')
 	{
-		tmp = *x;
 		*o += ft_putstr("+");
 		(*x)++;
 		ft_flag(ap, c, x, o);

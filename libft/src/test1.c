@@ -95,7 +95,7 @@ void	test1(va_list ap, char c, int *x, int *o)
 	if (c == 'n')
 	{
 		n = va_arg(ap, int*);
-		n = o;
+		*n = *o;
 	}
 	else if (c == 'D' || c == 'I')
 		*o += ft_putstr(ft_itoa_long(va_arg(ap, long int)));

@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include <malloc.h>
+
+extern struct s_mem	page[3];
 
 void			print_page(size_t type, void *b)
 {
@@ -19,20 +20,20 @@ void			print_page(size_t type, void *b)
 
 	if (type == SMALL)
 	{
-		ft_putstr("TINY : 0x");
-		ft_putendl((tmp = ft_itoa_base((int)b, 16)));
+		ft_putstr("TINY : ");
+		ft_putendl((tmp = ft_itoa_base_long((size_t)b, 16)));
 		free(tmp);
 	}
 	else if (type == MEDIUM)
 	{
-		ft_putstr("SMALL : 0x");
-		ft_putendl((tmp = ft_itoa_base((int)b, 16)));
+		ft_putstr("SMALL : ");
+		ft_putendl((tmp = ft_itoa_base_long((size_t)b, 16)));
 		free(tmp);
 	}
 	else if (type == (size_t)-1)
 	{
-		ft_putstr("LARGE : 0x");
-		ft_putendl((tmp = ft_itoa_base((int)b, 16)));
+		ft_putstr("LARGE : ");
+		ft_putendl((tmp = ft_itoa_base_long((size_t)b, 16)));
 		free(tmp);
 	}
 }
@@ -57,7 +58,7 @@ void			show_alloc_mem(void)
 			head = (struct s_head *)(page[y].memory[x]);
 			while (42)
 			{
-				printf("0x%X - 0x%X : %zu octets\n", (unsigned int)(head + sizeof(struct s_head)), (unsigned int)(head + sizeof(struct s_head) + head->size - 1), head->size);
+				head->used ? printf("%p - %p : %zu octets\n", (void *)(head + sizeof(struct s_head)), (void *)(head + sizeof(struct s_head) + head->size - 1), head->size) : 0;
 				head->used ? octets += head->size : 0;
 				z += head->size + sizeof(struct s_head);
 				if (z >= getpagesize() * ((page[y].type + sizeof(struct s_head)) * 100 / getpagesize() + 1))
@@ -75,7 +76,8 @@ void			show_alloc_mem(void)
 		if (page[y].memory[x])
 		{
 			head = page[y].memory[x];
-			printf("0x%X - 0x%X : %zu octets\n", (unsigned int)(head + sizeof(struct s_head)), (unsigned int)(page[y].memory[x] + sizeof(struct s_head) + head->size - 1), head->size);
+			printf("0x%p - 0x%p : %zu octets\n", (void *)(head + sizeof(struct s_head)), (void *)(page[y].memory[x] + sizeof(struct s_head) + head->size - 1), head->size);
+			octets += head->size;
 		}
 		x++;
 	}

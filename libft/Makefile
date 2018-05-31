@@ -47,7 +47,7 @@ $(NAME): $(FOBJ)
 
 $(DOBJ)/%.o: $(DSRC)/%.c $(DINC)
 	@$(MKDIR) $(DOBJ)
-	$(CC) $(FDEBUG) $(WFLAGS) -c $< $(FINC) -o $@
+	$(CC) $(FDEBUG) $(WFLAGS) -c $< $(FINC) -o $@ -fPIC
 
 clean:
 	$(RM) $(DOBJ)

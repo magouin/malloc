@@ -51,7 +51,7 @@ void	b_ft_hh(va_list ap, const char *c, int *x, int *o)
 void	ft_hh(va_list ap, const char *c, int *x, int *o)
 {
 	signed char		cr;
-	signed char		*cf;
+	int				*cf;
 
 	cf = NULL;
 	(*x) += 3;
@@ -62,8 +62,8 @@ void	ft_hh(va_list ap, const char *c, int *x, int *o)
 	}
 	else if (c[*x] == 'n')
 	{
-		cf = va_arg(ap, signed char*);
-		cf = (signed char*)o;
+		cf = va_arg(ap, int *);
+		*cf = *o;
 	}
 	else
 		b_ft_hh(ap, c, x, o);
@@ -102,9 +102,7 @@ int		ft_printf(const char *format, ...)
 	va_list	ap;
 	int		x;
 	int		o;
-	int		d;
 
-	d = 0;
 	o = 0;
 	x = 0;
 	if (format == NULL)
