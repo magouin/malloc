@@ -34,6 +34,20 @@ void			*get_space(unsigned char *mem, int type, size_t size)
 	return (mem + x);
 }
 
+void			*create_page(struct s_mem *memory, int x, void *maloc)
+{
+	memory->memory[x] = mmap(0, getpagesize() * ((memory->type +
+		sizeof(struct s_head)) * 100 / getpagesize() + 1),
+	PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	if (memory->memory[x] == (void *)-1)
+		return (++(memory->memory[x]));
+	((struct s_head*)memory->memory[x])->size = getpagesize() *
+	((memory->type + sizeof(struct s_head)) * 100 / getpagesize()
+		+ 1) - sizeof(struct s_head);
+	maloc = memory->memory[x];
+	return (maloc);
+}
+
 void			*get_mem(struct s_mem *memory, size_t size)
 {
 	int				x;
@@ -46,15 +60,8 @@ void			*get_mem(struct s_mem *memory, size_t size)
 		x], memory->type, size)))
 		x++;
 	if (!(memory->memory[x]))
-	{
-		memory->memory[x] = mmap(0, getpagesize() * ((memory->type +
-			sizeof(struct s_head)) * 100 / getpagesize() + 1),
-		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-		((struct s_head*)memory->memory[x])->size = getpagesize() *
-		((memory->type + sizeof(struct s_head)) * 100 / getpagesize()
-			+ 1) - sizeof(struct s_head);
-		maloc = memory->memory[x];
-	}
+		if (!(maloc = create_page(memory, x, maloc)))
+			return (NULL);
 	head = (struct s_head *)(maloc);
 	rez = maloc + sizeof(struct s_head);
 	(!(head->size == size)) ? (*(struct s_head *)(rez + size) = (struct s_head)
@@ -74,6 +81,8 @@ void			*malloc(size_t size)
 		x++;
 	page[2].memory[x] = mmap(0, size + sizeof(struct s_head),
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	if (page[2].memory[x] == (void *)-1)
+		return (++page[2].memory[x]);
 	*(struct s_head*)page[2].memory[x] = (struct s_head){size, 1};
 	return (page[2].memory[x] + sizeof(struct s_head));
 }

@@ -35,11 +35,6 @@ struct				s_mem
 	void			*memory[PMAX];
 }					;
 
-typedef struct		s_env
-{
-	int				coucou;
-}					t_env;
-
 void				free(void *ptr);
 void				*malloc(size_t size);
 void				*realloc(void *ptr, size_t size);
