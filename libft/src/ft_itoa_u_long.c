@@ -32,35 +32,19 @@ void				fln_u_long(char *str, int *len)
 	str[len[0] + len[1]] = '\0';
 }
 
-char				*jedoismlloc_u_long(unsigned long int n)
-{
-	char	*st;
-
-	st = NULL;
-	if (n == 0)
-	{
-		st = malloc(2);
-		st[1] = '\0';
-		st[0] = '0';
-	}
-	return (st);
-}
-
 char				*ft_itoa_u_long(unsigned long int n)
 {
 	int		len[2];
-	char	*str;
+	char	str[64];
 
 	len[0] = 0;
 	len[1] = 0;
 	if (n == 0)
 	{
-		str = jedoismlloc_u_long(n);
-		return (str);
+		ft_putstr("0");
+		return (NULL);
 	}
 	n = ft_calc_u_long(n, len);
-	if (!(str = malloc(len[0] * sizeof(char) + 1 + len[1])))
-		return (NULL);
 	fln_u_long(str, len);
 	while (n)
 	{
@@ -68,5 +52,6 @@ char				*ft_itoa_u_long(unsigned long int n)
 		n /= 10;
 		len[0]--;
 	}
-	return (str);
+	ft_putstr(str);
+	return (NULL);
 }

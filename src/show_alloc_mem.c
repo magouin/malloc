@@ -16,45 +16,38 @@ extern struct s_mem	page[3];
 
 void			print_page(size_t type, void *b)
 {
-	char		*tmp;
-
 	if (type == SMALL)
 	{
 		ft_putstr("TINY : 0x");
-		ft_putendl((tmp = ft_itoa_base_long((size_t)b, 16)));
-		free(tmp);
+		ft_itoa_base_long((size_t)b, 16);
 	}
 	else if (type == MEDIUM)
 	{
 		ft_putstr("SMALL : 0x");
-		ft_putendl((tmp = ft_itoa_base_long((size_t)b, 16)));
-		free(tmp);
+		ft_itoa_base_long((size_t)b, 16);
 	}
 	else if (type == (size_t)-1)
 	{
 		ft_putstr("LARGE : 0x");
-		ft_putendl((tmp = ft_itoa_base_long((size_t)b, 16)));
-		free(tmp);
+		ft_itoa_base_long((size_t)b, 16);
 	}
+	else
+		return ;
+	ft_putendl("");
 }
 
 void			used(size_t* octets, struct s_head *head)
 {
-	char *tmp;
-
 	if (head->used)
 	{
 		ft_putstr("0x");
-		ft_putstr((tmp = ft_itoa_base_long((size_t)((void *)head + sizeof(
-			struct s_head)), 16)));
-		free(tmp);
+		ft_itoa_base_long((size_t)((void *)head + sizeof(
+			struct s_head)), 16);
 		ft_putstr(" - 0x");
-		ft_putstr((tmp = ft_itoa_base_long((size_t)((void *)head + sizeof(
-			struct s_head) + head->size - 1), 16)));
-		free(tmp);
+		ft_itoa_base_long((size_t)((void *)head + sizeof(
+			struct s_head) + head->size - 1), 16);
 		ft_putstr(" : ");
-		ft_putstr((tmp = ft_itoa_u_long(head->size)));
-		free(tmp);
+		ft_itoa_u_long(head->size);
 		ft_putstr(" octets\n");
 		*octets += head->size;
 	}

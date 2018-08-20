@@ -34,7 +34,7 @@ void			*get_space(unsigned char *mem, int type, size_t size)
 	return (mem + x);
 }
 
-void			*create_page(struct s_mem *memory, int x, void *maloc)
+void			*create_page(struct s_mem *memory, int x, void *ptr)
 {
 	memory->memory[x] = mmap(0, getpagesize() * ((memory->type +
 		sizeof(struct s_head)) * 100 / getpagesize() + 1),
@@ -44,26 +44,26 @@ void			*create_page(struct s_mem *memory, int x, void *maloc)
 	((struct s_head*)memory->memory[x])->size = getpagesize() *
 	((memory->type + sizeof(struct s_head)) * 100 / getpagesize()
 		+ 1) - sizeof(struct s_head);
-	maloc = memory->memory[x];
-	return (maloc);
+	ptr = memory->memory[x];
+	return (ptr);
 }
 
 void			*get_mem(struct s_mem *memory, size_t size)
 {
 	int				x;
-	void			*maloc;
+	void			*ptr;
 	struct s_head	*head;
 	void			*rez;
 
 	x = 0;
-	while (memory->memory[x] && !(maloc = get_space(memory->memory[
+	while (memory->memory[x] && !(ptr = get_space(memory->memory[
 		x], memory->type, size)))
 		x++;
 	if (!(memory->memory[x]))
-		if (!(maloc = create_page(memory, x, maloc)))
+		if (!(ptr = create_page(memory, x, ptr)))
 			return (NULL);
-	head = (struct s_head *)(maloc);
-	rez = maloc + sizeof(struct s_head);
+	head = (struct s_head *)(ptr);
+	rez = ptr + sizeof(struct s_head);
 	(!(head->size == size)) ? (*(struct s_head *)(rez + size) = (struct s_head)
 {head->size - size - sizeof(struct s_head), 0}) : (struct s_head){0, 0};
 	*head = (struct s_head){size, 1};
@@ -75,6 +75,7 @@ void			*malloc(size_t size)
 	int x;
 
 	x = 0;
+	size += 16 - size % 16;
 	if (size < MEDIUM)
 		return (get_mem(&(page[size < SMALL ? 0 : 1]), size));
 	while (page[2].memory[x])
