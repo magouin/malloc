@@ -6,7 +6,7 @@
 #    By: magouin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/27 13:24:03 by magouin           #+#    #+#              #
-#    Updated: 2017/11/30 16:50:35 by magouin          ###   ########.fr        #
+#    Updated: 2018/09/05 17:41:07 by magouin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,6 @@ INC 		= $(addprefix -I,$(DINC))
 all: libft $(FOBJ) $(NAME)
 		@rm libft_malloc.so 2> /dev/null || true
 		ln -s $(NAME) libft_malloc.so
-		gcc main.c libft_malloc.so libft/libft.a -g
 
 $(NAME): $(LIBFT) $(FOBJ)
 		gcc -shared -o $@ $(FOBJ) $(LIBFT)

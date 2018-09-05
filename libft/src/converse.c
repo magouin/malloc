@@ -12,19 +12,9 @@
 
 #include "../includes/ft_printf.h"
 
-void	ft_unicode(int c, int *o)
+void	else_unicode(int c, char *c1)
 {
-	char c1[4];
-
-	ft_bzero(c1, 4);
-	if (c == 0)
-	{
-		(*o)++;
-		ft_putchar('\0');
-	}
-	if (c < 0x80)
-		c1[0] = ((c >> 0 & 0x7F) | 0x00);
-	else if (c < 0x800)
+	if (c < 0x800)
 	{
 		c1[0] = ((c >> 6 & 0x1F) | 0xC0);
 		c1[1] = ((c >> 0 & 0x3F) | 0x80);
@@ -42,6 +32,22 @@ void	ft_unicode(int c, int *o)
 		c1[2] = ((c >> 6 & 0x3F) | 0x80);
 		c1[3] = ((c >> 0 & 0x3F) | 0x80);
 	}
+}
+
+void	ft_unicode(int c, int *o)
+{
+	char c1[4];
+
+	ft_bzero(c1, 4);
+	if (c == 0)
+	{
+		(*o)++;
+		ft_putchar('\0');
+	}
+	if (c < 0x80)
+		c1[0] = ((c >> 0 & 0x7F) | 0x00);
+	else
+		else_unicode(c, c1);
 	(*o) += ft_putstr(c1);
 }
 

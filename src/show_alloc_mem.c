@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: magouin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/29 19:17:09 by magouin           #+#    #+#             */
-/*   Updated: 2017/11/30 17:11:35 by magouin          ###   ########.fr       */
+/*   Created: 2018/09/05 19:37:44 by magouin           #+#    #+#             */
+/*   Updated: 2018/09/05 19:37:45 by magouin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern struct s_mem	page[3];
 
-void			print_page(size_t type, void *b)
+static void	print_page(size_t type, void *b)
 {
 	if (type == SMALL)
 	{
@@ -36,7 +36,7 @@ void			print_page(size_t type, void *b)
 	ft_putendl("");
 }
 
-void			used(size_t* octets, struct s_head *head)
+static void	used(size_t *octets, struct s_head *head)
 {
 	if (head->used)
 	{
@@ -53,9 +53,9 @@ void			used(size_t* octets, struct s_head *head)
 	}
 }
 
-void			get_small_medium(int y, size_t *octets)
+static void	get_small_medium(int y, size_t *octets)
 {
-		int				x;
+	int				x;
 	struct s_head	*head;
 	size_t			z;
 
@@ -78,7 +78,7 @@ void			get_small_medium(int y, size_t *octets)
 	}
 }
 
-void			show_alloc_mem(void)
+void		show_alloc_mem(void)
 {
 	struct s_head	*head;
 	int				y;

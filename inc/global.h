@@ -12,5 +12,8 @@
 
 #ifndef GLOBAL_H
 # define GLOBAL_H
-	struct s_mem	page[3] = {(struct s_mem){SMALL, {NULL}}, (struct s_mem){MEDIUM, {NULL}}, (struct s_mem){0, {NULL}}};
+
+struct s_mem	page[3] = {(struct s_mem){SMALL, {NULL}}, (struct s_mem)
+	{MEDIUM, {NULL}}, (struct s_mem){0, {NULL}}};
+
 #endif
