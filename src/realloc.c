@@ -22,7 +22,7 @@ static void		*search_for_realloc2(struct s_norm a, void *ptr, size_t size,
 
 	next = (struct s_head*)(page[a.y].memory[a.x] + *(a.z) +
 	curr->size + sizeof(struct s_head));
-	if (!next->used && size + 16 - (size % 16) < next->size + curr->size)
+	if (!next->used && size < next->size + curr->size - 16 + (next->size + curr->size) % 16)
 	{
 		curr->size += next->size + sizeof(struct s_head);
 		rez = curr;
@@ -42,7 +42,7 @@ static void		*search_for_realloc(struct s_norm a, void *ptr, size_t size)
 	void			*rez;
 
 	curr = (struct s_head *)(page[a.y].memory[a.x] + *(a.z));
-	if (curr + sizeof(struct s_head) == ptr && curr->used)
+	if (curr + sizeof(struct s_head) == ptr)
 	{
 		if (*(a.z) + curr->size < ((page[a.y].type + sizeof(struct s_head)) *
 100 / getpagesize() + 1) * getpagesize() - sizeof(struct s_head))
@@ -92,8 +92,12 @@ void			*realloc(void *ptr, size_t size)
 	void	*rez;
 
 	y = 0;
+	printf("je rentre\n");
 	if (ptr == NULL)
+	{
+		printf("je sors\n");
 		return (malloc(size));
+	}
 	while (y < 2)
 	{
 		x = 0;
@@ -105,11 +109,15 @@ void			*realloc(void *ptr, size_t size)
 			{
 				if ((rez = search_for_realloc((struct s_norm)
 					{x, y, &z}, ptr, size)))
+				{
+					printf("je sors avec %p - %p\n", ptr, rez);
 					return (rez);
+				}
 			}
 			x++;
 		}
 		y++;
 	}
+	printf("je sors\n");
 	return (realloc_large(y, ptr, size));
 }
