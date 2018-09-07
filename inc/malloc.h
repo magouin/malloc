@@ -35,6 +35,13 @@ struct				s_mem
 	void			*memory[PMAX];
 }					;
 
+struct				s_norm
+{
+	int				x;
+	int				y;
+	size_t			*z;
+}					;
+
 void				free(void *ptr);
 void				*malloc(size_t size);
 void				*realloc(void *ptr, size_t size);

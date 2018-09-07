@@ -14,7 +14,7 @@
 
 extern struct s_mem	page[3];
 
-static void	print_page(size_t type, void *b)
+void		print_page(size_t type, void *b)
 {
 	if (type == SMALL)
 	{
@@ -36,16 +36,16 @@ static void	print_page(size_t type, void *b)
 	ft_putendl("");
 }
 
-static void	used(size_t *octets, struct s_head *head)
+void		used(size_t *octets, struct s_head *head)
 {
 	if (head->used)
 	{
 		ft_putstr("0x");
-		ft_itoa_base_long((size_t)((void *)head + sizeof(
-			struct s_head)), 16);
+		ft_itoa_base_long((size_t)((void *)head +
+			sizeof(struct s_head)), 16);
 		ft_putstr(" - 0x");
-		ft_itoa_base_long((size_t)((void *)head + sizeof(
-			struct s_head) + head->size - 1), 16);
+		ft_itoa_base_long((size_t)((void *)head +
+			sizeof(struct s_head) + head->size - 1), 16);
 		ft_putstr(" : ");
 		ft_itoa_u_long(head->size);
 		ft_putstr(" octets\n");
@@ -53,7 +53,7 @@ static void	used(size_t *octets, struct s_head *head)
 	}
 }
 
-static void	get_small_medium(int y, size_t *octets)
+void		get_small_medium(int y, size_t *octets)
 {
 	int				x;
 	struct s_head	*head;
@@ -69,8 +69,8 @@ static void	get_small_medium(int y, size_t *octets)
 		{
 			used(octets, head);
 			z += head->size + sizeof(struct s_head);
-			if (z >= getpagesize() * ((page[y].type + sizeof(
-				struct s_head)) * 100 / getpagesize() + 1))
+			if (z >= getpagesize() * ((page[y].type +
+				sizeof(struct s_head)) * 100 / getpagesize() + 1))
 				break ;
 			head = (struct s_head *)(page[y].memory[x] + z);
 		}
